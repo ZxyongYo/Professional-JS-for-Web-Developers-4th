@@ -1,11 +1,11 @@
 /* 为了解决原型包含引用值导致的继承问题 */
 
-function SuperType() {
-  this.colors = ['red', 'blue', 'green']
+function SuperType(otherColors) {
+  this.colors = ['red', 'blue', 'green', ...otherColors]
 }
 function SubType() {
   // 继承 SuperType
-  SuperType.call(this)
+  SuperType.call(this, ['pink', 'white'])
 }
 
 let instance1 = new SubType()
