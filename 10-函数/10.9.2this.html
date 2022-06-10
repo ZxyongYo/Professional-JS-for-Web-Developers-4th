@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    /*
+      在标准函数中，this指向把函数当成方法调用的上下文对象（在网页的全局上下文中调用函数，this指向window）
+    */
+    window.color = 'red'
+    let o = {
+      color: 'blue'
+    }
+
+    function getColor() {
+      console.log(this.color)
+    }
+    o.getColor = getColor
+
+    getColor() // red
+    o.getColor() // blue
+
+    /*
+      在箭头函数中，this始终指向定义箭头函数的上下文
+    */
+
+    let sayColor = () => console.log(this.color)
+    o.sayColor = sayColor
+    sayColor() // red
+    o.sayColor() // red
+  </script>
+</body>
+</html>
