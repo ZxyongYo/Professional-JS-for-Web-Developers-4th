@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button>scroll to 500th item</button>
+  <script>
+    const ul = document.createElement('ul')
+    for (let i = 0; i < 1000; i++) {
+      const li = document.createElement('li')
+      li.innerText = 'this is the ' + i + 'th item'
+      ul.appendChild(li)
+    }
+    document.body.appendChild(ul)
+    
+    const btn = document.querySelector('button')
+    btn.addEventListener('click', () => {
+      const target = ul.children[500]
+      target.scrollIntoView({behavior: 'smooth'})
+    })
+  </script>
+</body>
+</html>

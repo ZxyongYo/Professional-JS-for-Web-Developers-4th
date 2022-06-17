@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul></ul>
+
+  <script>
+    const fragment = document.createDocumentFragment()
+    const ul = document.querySelector('ul')
+    for (let i = 0; i < 6; i++) {
+      const li = document.createElement('li')
+      li.innerText = 'this is item ' + i
+      fragment.appendChild(li)
+    }
+    ul.appendChild(fragment)
+
+    setTimeout(() => {
+      ul.appendChild(ul.firstChild)
+    }, 1000)
+
+    setTimeout(() => {
+      ul.insertBefore(ul.lastChild, ul.firstChild)
+    }, 2000)
+
+    ul.setAttribute('data-color', 'black')
+    console.log(ul.dataset)
+    console.log(ul.attributes)
+    console.log(ul.getAttribute('data-color'))
+    // ul.removeAttribute('data-color')
+  </script>
+</body>
+</html>
