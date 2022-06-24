@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      window.addEventListener('load', () => {
+        // const image = new Image()
+        const image = document.createElement('img')
+        image.addEventListener('load', (e) => {
+          console.log('Image loaded')
+        })
+        image.src = '../images/mount.jpg'
+        document.body.appendChild(image)
+      })
+
+      window.addEventListener('click', (e) => {
+        // 客户端坐标
+        console.log(`Client coordinates: ${e.clientX} , ${e.clientY}`)
+        // 页面坐标
+        console.log(`Page coordinates: ${e.pageX} , ${e.pageY}`)
+        // 屏幕坐标
+        console.log(`Screen coordinates: ${e.screenX} , ${e.screenY}`)
+      })
+
+      // 鼠标滚轮滚动事件
+      window.addEventListener('mousewheel', e => {
+        console.log(e.wheelDelta)
+      })
+
+      window.addEventListener('keyup', e => {
+        console.log(e)
+      })
+    </script>
+  </body>
+</html>

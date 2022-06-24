@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body style="height: 100vh">
+    <div id="output"></div>
+    <script>
+      function handleTouchEvent(event) {
+        // 只针对一个触点
+        if (event.touches.length == 1) {
+          let output = document.getElementById('output')
+          switch (event.type) {
+            case 'touchstart':
+              output.innerHTML +=
+                `<br>Touch started:` +
+                `(${event.touches[0].clientX}` +
+                ` ${event.touches[0].clientY})`
+              break
+            case 'touchend':
+              output.innerHTML +=
+                `<br>Touch ended:` +
+                `(${event.changedTouches[0].clientX}` +
+                ` ${event.changedTouches[0].clientY})`
+              break
+            case 'touchmove':
+              event.preventDefault() // 阻止滚动
+              output.innerHTML +=
+                `<br>Touch moved:` +
+                `(${event.changedTouches[0].clientX}` +
+                ` ${event.changedTouches[0].clientY})`
+              break
+          }
+        }
+      }
+      document.addEventListener('touchstart', handleTouchEvent)
+      document.addEventListener('touchend', handleTouchEvent)
+      document.addEventListener('touchmove', handleTouchEvent)
+    </script>
+  </body>
+</html>
