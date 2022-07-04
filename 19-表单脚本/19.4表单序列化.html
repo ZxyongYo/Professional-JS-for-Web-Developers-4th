@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .form-item {
+        margin: 10px 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <div class="form-item">
+        avatar:
+        <input type="file" name="avatar" accept="image/*" />
+      </div>
+
+      <div class="form-item">
+        name:
+        <input type="text" name="uname" />
+      </div>
+
+      <div class="form-item">
+        gender:
+        <input type="radio" name="gender" value="0" id="male" />
+        <label for="male">male</label>
+        <input type="radio" name="gender" value="1" id="female" />
+        <label for="female">female</label>
+      </div>
+
+      <div class="form-item">
+        hobby:
+        <input type="checkbox" name="hobby" value="0" id="basketball" />
+        <label for="basketball">basketball</label>
+        <input type="checkbox" name="hobby" value="1" id="football" />
+        <label for="football">football</label>
+        <input type="checkbox" name="hobby" value="2" id="games" />
+        <label for="games">computer games</label>
+      </div>
+
+      <div class="form-item">
+        location:
+        <select name="location" id="selLocation">
+          <option value="">-- choose your location --</option>
+          <option value="Sunnyvale, CA">Sunnyvale</option>
+          <option value="Los Angeles, CA">Los Angeles</option>
+          <option value="Mountain View, CA">Mountain View</option>
+          <option value="China">China</option>
+          <option>Australia</option>
+        </select>
+      </div>
+
+      <div class="form-item">
+        <input type="button" value="submit" onclick="serialize(this.form)" />
+        <input type="reset" value="reset" />
+      </div>
+    </form>
+
+    <script>
+      /**
+       * @param {HTMLFormElement} form
+       * @retutn {string}
+       */
+      function serialize(form) {
+        let parts = []
+        let optValue
+        for (let field of form.elements) {
+          switch (field.type) {
+            case 'select-one':
+            case 'select-multiple':
+              if (field.name.length) {
+                for (let option of field.options) {
+                  if (option.selected) {
+                    if (option.hasAttribute) {
+                      optValue = option.hasAttribute('value')
+                        ? option.value
+                        : option.text
+                    } else {
+                      optValue = option.attributes['value'].specified
+                        ? option.value
+                        : option.text
+                    }
+                    parts.push(
+                      `${encodeURIComponent(field.name)}=${encodeURIComponent(optValue)}`
+                    )
+                  }
+                }
+              }
+              break
+            case undefined: // 字段集
+            case 'file': // 文件输入
+            case 'submit': // 提交按钮
+            case 'reset': // 重置按钮
+            case 'button': // 自定义按钮
+              break
+            case 'radio': // 单选按钮
+            case 'checkbox': // 复选框
+              if (!field.checked) {
+                break
+              }
+            default:
+              // 不包含没有名字的表单字段
+              if (field.name.length) {
+                parts.push(
+                  `${encodeURIComponent(field.name)}=${encodeURIComponent(field.value)}`
+                )
+              }
+          }
+        }
+        console.log(parts.join('&'))
+        return parts.join('&')
+      }
+    </script>
+  </body>
+</html>
