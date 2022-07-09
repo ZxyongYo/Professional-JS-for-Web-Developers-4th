@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" id="files" multiple>
+  <span id="progress"></span>
+  <p id="output"></p>
+
+  <script>
+    const filesList = document.getElementById('files')
+    filesList.addEventListener('change', e => {
+      let output = document.getElementById('output'),
+          progress = document.getElementById('progress'),
+          files = e.target.files,
+          reader = new FileReader(),
+          type = 'default'
+
+      if (/image/.test(files[0].type)) {
+        reader.readAsDataURL(files[0])
+        type = 'image'
+      } else {
+        reader.readAsText(files[0])
+        type = 'text'
+      }
+      
+      reader.onerror = () => {
+        output.innerHTML = 'read error, code is ' + reader.error.code
+      }
+      reader.onprogress = (e) => {
+        console.log(e)
+        if (e.lengthComputable) {
+          progress.innerHTML = e.loaded / e.total * 100 + '%'
+        }
+      }
+      reader.onload = e => {
+        let html = ''
+        switch(type) {
+          case 'image':
+            html = `<img src="${reader.result}" />`
+            const a = document.createElement('a')
+            a.setAttribute('download', files[0].name)
+            a.setAttribute('href', reader.result)
+            a.innerText = '下载'
+            document.body.appendChild(a)
+            break
+          case 'text':
+            html = reader.result
+            break
+        }
+        output.innerHTML = html
+      }
+    })
+  </script>
+</body>
+</html>

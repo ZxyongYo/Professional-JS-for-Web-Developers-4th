@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="file" id="file-selector" />
+    <div id="output"></div>
+
+    <div
+      id="droptarget"
+      style="
+        width: 320px;
+        height: 200px;
+        border: 1px solid #ccc;
+        margin: 20px auto;
+      "
+    ></div>
+
+    <script>
+      /**
+        window.URL.createObjectURL() 方法接收 File 或 Blob 对象
+        返回一个指向内存中地址的字符串
+      */
+      let filesList = document.getElementById('file-selector')
+      filesList.addEventListener('change', e => {
+        const output = document.getElementById('output')
+        const files = e.target.files
+        const url = URL.createObjectURL(files[0])
+        console.log(url)
+        if (url && /image/.test(files[0].type)) {
+          output.innerHTML = `<img src="${url}" />`
+        } else {
+          output.innerHTML = `<a href="${url}" target="_black">查看</a>`
+        }
+        setTimeout(() => {
+          // url 使用过后移除  以释放内存
+          URL.revokeObjectURL(url)
+        }, 20)
+      })
+
+
+      /*
+        读取拖放文件
+      */
+      let droptarget = document.getElementById('droptarget')
+      function handleEvent(event) {
+        let info = '',
+          output = document.getElementById('output'),
+          files,
+          i,
+          len
+        event.preventDefault()
+        if (event.type == 'drop') {
+          files = event.dataTransfer.files
+          i = 0
+          len = files.length
+          while (i < len) {
+            info += `${files[i].name} (${files[i].type}, ${files[i].size} bytes)<br>`
+            i++
+          }
+          output.innerHTML = info
+        }
+      }
+      droptarget.addEventListener('dragenter', handleEvent)
+      droptarget.addEventListener('dragover', handleEvent)
+      droptarget.addEventListener('drop', handleEvent)
+    </script>
+  </body>
+</html>
