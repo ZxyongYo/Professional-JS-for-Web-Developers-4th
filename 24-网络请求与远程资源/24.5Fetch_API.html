@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" multiple id="upload">
+  <img src="" id="image">
+  <script>
+    fetch('../README.md')
+      .then(res => res.text())
+      .then(console.log)
+
+    const ipt = document.getElementById('upload')
+    ipt.addEventListener('change', e => {
+      const form = new FormData()
+      for (let i = 0; i < ipt.files.length; ++i) {
+        form.append('image', ipt.files[i])
+      }
+      console.log(form.getAll('image'))
+      fetch('/upload', {
+        method: 'POST',
+        body: form
+      })
+    })
+
+    const img = document.getElementById('image')
+    fetch('../images/mount.jpg')
+      .then(res => res.blob())
+      .then(blob => {
+        img.src = URL.createObjectURL(blob)
+      })
+  </script>
+</body>
+</html>
