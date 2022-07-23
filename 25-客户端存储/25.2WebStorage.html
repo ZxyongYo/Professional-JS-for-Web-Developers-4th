@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+        sessionStorage 对象只存储会话数据，数据只会存储到浏览器关闭
+      */
+      sessionStorage.name = 'value'
+      console.log(sessionStorage.name)
+      sessionStorage.setItem('name', 'value')
+      console.log(sessionStorage.getItem('name'))
+
+      /*
+        localStorage 对象存储的数据会保留到通过JavaScript删除或者用户清楚浏览器缓存
+      */
+      localStorage.name = 'value'
+      console.log(localStorage.name)
+      localStorage.setItem('name', 'value')
+      console.log(localStorage.getItem('name'))
+    </script>
+  </body>
+</html>
